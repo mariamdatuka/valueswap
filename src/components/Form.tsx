@@ -11,18 +11,32 @@ interface DataProps {
   name: string;
 }
 interface CoinData {
-  image: string;
+  image: {
+    thumb: string;
+  };
 }
+
 const Form = () => {
   const [data, setData] = useState<DataProps[]>([]);
+  // const [bnbValue, setBnbValue] = useState<string>("");
   const [coinDetails, setCoinDetails] = useState<CoinData>({
-    image: "",
+    image: {
+      thumb: "",
+    },
   });
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>("Select");
   const toggleDropdownMenu = () => {
     setIsOpened(!isOpened);
   };
+
+  /*const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    setBnbValue(inputValue);
+  };
+  */
+
+  // const parsedValue = parseFloat(bnbValue);
 
   const URL = "https://api.coingecko.com/api/v3/coins/";
   const fetchAllCoins = async () => {
@@ -42,8 +56,10 @@ const Form = () => {
   const fetchCoinDetails = async (id: string) => {
     try {
       const response = await axios.get(`${URL}${id}`);
-      setCoinDetails(response.data.image.thumb);
-      console.log(data);
+      setCoinDetails(() => ({
+        image: { thumb: response.data.image.thumb },
+      }));
+      console.log(coinDetails);
     } catch (error) {
       console.error(error);
     }
@@ -77,8 +93,8 @@ const Form = () => {
               type="button"
             >
               <p className="text-base">{selected}</p>
-              {coinDetails.image !== "" ? (
-                <p>bla</p>
+              {coinDetails.image.thumb !== "" ? (
+                <img src={coinDetails.image.thumb} alt="coinlogo" />
               ) : (
                 <img src={arrow} alt="arrow" />
               )}
@@ -98,6 +114,9 @@ const Form = () => {
             )}
           </div>
         </form>
+        <button className="p-4 bg-white w-full text-xl font-semibold text-black hover:bg-transparent hover:text-white transition-all ease-in-out duration-300">
+          Connect Wallet
+        </button>
       </main>
     </>
   );

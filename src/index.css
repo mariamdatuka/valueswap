@@ -7,6 +7,9 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #020102;
   color: #ffffff;
+  background-image: url("./assets/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
