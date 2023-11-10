@@ -1,13 +1,11 @@
-
+import Form from "./components/Form";
 
 function App() {
-
-
   return (
     <>
-      <p className='text-blue-500 text-2xl'>Hi</p>
+      <Form />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
